@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block t1 %}
+<h5>amjat adm00n 👊😎 👌🥵</h5>
+{% endblock %}
+
+{% block content %}
+
+{% for msg in msg_list %}
+
+<div class="row">
+    <div class="col s12 m6">
+      <div class="card">
+        <div class="card-content">
+			<p>{{ msg.msg }}
+				<br>
+				<span class="grey-text text-lighten-1">{{ msg.date_created.strftime('%Y-%m-%d %H:%M') }}</span>
+			</p>
+		</div>
+		<div class="card-action right-align">
+			<a href="/update/{{ msg.id }}">Modify</a>
+			<a href="/delete/{{ msg.id }}">Delete</a>
+		</div>
+      </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}

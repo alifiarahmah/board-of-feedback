@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block t1 %}
+
+			<div class="row">
+				<div class="col s12 m10 offset-m1 l8 offset-l2">
+					<p>Halo, kalo ada kritik, saran, unek2, ato mau kasih pesan apapun itu tulis aja ya, demi alifia yang lebih baik ^^</p>
+					<p>Sabi ditulis aja.</p>
+				</div>
+			</div>
+
+			<!-- ADD MSG -->
+			<section class="center-align">
+				<div class="row">
+					<div class="col s12 m10 offset-m1 l8 offset-l2">
+						<div class="card">
+
+							<form action="/" method="POST">
+								<!--input type="text" name="sender" id="sender" placeholder="Author"-->
+								<div class="card-content">
+									<!-- input type="text" name="msg" id="msg" placeholder="Sender name (optional)" -->
+									<input type="text" name="msg" id="msg" placeholder="Input your message here...">
+								</div>
+								
+								<div class="card-action right-align">
+									<button class="waves-effect waves-light btn indigo darken-2" type="submit">
+										Send
+										<i class="material-icons right">send</i>
+									</button>
+								</div>
+							</form>
+							
+						</div>
+					</div>
+				</div>
+			</section>
+
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+	<div class="col s12 m10 offset-m1 l8 offset-l2">  
+		{% for msg in msg_list %}
+		<div class="card">
+			<div class="card-content">
+				<p>{{ msg.msg }}
+					<br>
+					<span class="grey-text text-lighten-1">{{ msg.date_created.strftime('%Y-%m-%d %H:%M') }}</span>
+				</p>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+</div>
+
+
+{% endblock %}
