@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://fsloknsrwinzcu:cb12c189652877c9dbe82a99fbb6a3633396b3939d43cab5b406f89a2ca0d013@ec2-23-20-70-32.compute-1.amazonaws.com:5432/d4d8ln8f1ps8lk'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'test.db'
 db = SQLAlchemy(app)
 
 class Messages(db.Model):
@@ -16,6 +16,9 @@ class Messages(db.Model):
 	def __repr__(self):
 		# return '<Task %r' % self.id
 		return '<Messages %r>' % self.id
+
+class Config(object):
+	LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -70,6 +73,31 @@ def update(id):
 
 	else:
 		return render_template('update.html', msg=msg)
+
+def create_app(config_class=Config):
+    # ...
+    if not app.debug and not app.testing:
+        # ...
+
+        if app.config['LOG_TO_STDOUT']:
+            stream_handler = logging.StreamHandler()
+            stream_handler.setLevel(logging.INFO)
+            app.logger.addHandler(stream_handler)
+        else:
+            if not os.path.exists('logs'):
+                os.mkdir('logs')
+            file_handler = RotatingFileHandler('logs/microblog.log',
+                                               maxBytes=10240, backupCount=10)
+            file_handler.setFormatter(logging.Formatter(
+                '%(asctime)s %(levelname)s: %(message)s '
+                '[in %(pathname)s:%(lineno)d]'))
+            file_handler.setLevel(logging.INFO)
+            app.logger.addHandler(file_handler)
+
+        app.logger.setLevel(logging.INFO)
+        app.logger.info('Microblog startup')
+
+    return app
 
 if __name__ == "__main__":
 	app.run(debug=True)
