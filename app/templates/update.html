@@ -11,6 +11,7 @@ anjay ganti 😳😳😳
 
 <form action="/update/{{ msg.id }}" method="POST">
 	<div class="card-content">
+        <input type="text" name="sender" id="sender" value="{{ msg.sender }}" placeholder="Sender name (optional)">
 		<input type="text" name="msg" id="msg" value="{{ msg.msg }}" placeholder="Input your message here...">
 	</div>
 

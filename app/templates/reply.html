@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    <p>Reply for:<br>
+        "{{ msg.msg }}"
+        {% if msg.sender %}
+        <br>-{{ msg.sender }}
+        {% endif %}
+    </p>
+
+    <form action="/reply/{{ msg.id }}" method="POST">
+        <div class="card-action right-align">
+            <input type="text" name="reply" id="reply" placeholder="Reply">
+            <div class="card-action right-align">
+                <button class="waves-effect waves-light btn" type="submit">
+                    Reply
+                </button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
